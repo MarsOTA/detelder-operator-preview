@@ -49,9 +49,9 @@ const HeaderOperatore = () => {
               onClick={toggleMenu}
               aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
               aria-expanded={menuOpen}
-              className="h-11 w-11 rounded-xl text-[#00ffb8] hover:bg-[#102330] hover:text-[#00ffb8]"
+              className="h-12 w-12 rounded-xl text-[#00ffb8] hover:bg-[#102330] hover:text-[#00ffb8]"
             >
-              {menuOpen ? <X className="h-9 w-9" /> : <Menu className="h-9 w-9" />}
+              {menuOpen ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
             </Button>
           </div>
         </div>
