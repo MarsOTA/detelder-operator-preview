@@ -28,10 +28,15 @@
   background-color: #153d3a !important;
 }
 
-/* L'header orario deve aderire direttamente alla linguetta superiore */
+/* Header orario: aderisce alla linguetta, ma il contenuto respira */
 .info-orario-turno {
   margin-top: 0 !important;
   border-top: 0 !important;
+  transform: none !important;
+  padding-top: 11px !important;
+  padding-bottom: 8px !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 /* Badge più distanziato dall'orario */
