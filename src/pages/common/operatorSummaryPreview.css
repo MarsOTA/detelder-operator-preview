@@ -1,5 +1,25 @@
 /* Preview tweak: dashboard riepilogo finale operatore allineato allo SVG */
 
+/* Card evento: bordo semplice, niente doppio fondo/linguetta */
+.card-turni {
+  border: 1px solid #4e8979 !important;
+  background: #1c2b3c !important;
+  background-image: none !important;
+  background-origin: initial !important;
+  background-clip: border-box !important;
+  overflow: hidden;
+}
+
+/* Secondo evento: variante cromatica discreta per distinguere le card */
+.card-turni-alt {
+  background: #172f36 !important;
+  border-color: #3f766c !important;
+}
+
+.card-turni-alt .info-orario-turno {
+  background-color: #153d3a !important;
+}
+
 .sintesi-container {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -31,7 +51,7 @@
   flex: 0 0 auto;
 }
 
-/* ORE DEL MESE: icona a sinistra, valore e 'ore' sempre sulla stessa riga */
+/* ORE DEL MESE: tutto su una riga anche con valori lunghi tipo 123:30 */
 .ore-mese-value-content {
   flex: 1 1 auto;
   min-height: 0;
@@ -39,30 +59,32 @@
   flex-direction: row !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 7px !important;
+  gap: 6px !important;
   padding: 0 0 8px !important;
-  white-space: nowrap;
+  white-space: nowrap !important;
+  overflow: hidden;
 }
 
 .ore-mese-value-content svg {
-  width: 34px !important;
-  height: 34px !important;
-  flex: 0 0 34px;
+  width: 28px !important;
+  height: 28px !important;
+  flex: 0 0 28px;
 }
 
 .ore-mese-value {
   flex: 0 1 auto;
   min-width: 0;
-  font-size: clamp(24px, 7.8vw, 34px) !important;
+  font-size: 25px !important;
   line-height: 1 !important;
   font-weight: 900 !important;
   white-space: nowrap !important;
+  letter-spacing: -0.02em;
 }
 
 .ore-label {
   flex: 0 0 auto;
-  margin: 8px 0 0 0 !important;
-  font-size: 11px !important;
+  margin: 5px 0 0 0 !important;
+  font-size: 10px !important;
   line-height: 1 !important;
   font-weight: 700;
   white-space: nowrap !important;
@@ -141,21 +163,27 @@
   .ore-mese-sintesi,
   .prossimi-turni-sintesi {
     height: 156px !important;
-    padding: 16px 14px 13px !important;
+    padding: 16px 12px 13px !important;
+  }
+
+  .ore-mese-value-content {
+    gap: 5px !important;
   }
 
   .ore-mese-value-content svg {
-    width: 32px !important;
-    height: 32px !important;
-    flex-basis: 32px;
+    width: 25px !important;
+    height: 25px !important;
+    flex-basis: 25px;
   }
 
   .ore-mese-value {
-    font-size: clamp(23px, 7vw, 31px) !important;
+    font-size: 21px !important;
+    letter-spacing: -0.03em;
   }
 
   .ore-label {
-    font-size: 10px !important;
+    font-size: 9px !important;
+    margin-top: 4px !important;
   }
 
   .prossimi-turni-next-content {
