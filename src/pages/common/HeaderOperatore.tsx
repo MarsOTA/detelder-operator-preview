@@ -52,8 +52,8 @@ const HeaderOperatore = () => {
               className="h-[50px] w-[50px] rounded-xl text-[#00ffb8] hover:bg-[#102330] hover:text-[#00ffb8]"
             >
               {menuOpen
-                ? <X className="!h-[40px] !w-[40px]" strokeWidth={2.4} />
-                : <Menu className="!h-[40px] !w-[44px] scale-x-110" strokeWidth={2.5} />}
+                ? <X className="!h-[34px] !w-[34px]" strokeWidth={2.4} />
+                : <Menu className="!h-[34px] !w-[37px] scale-x-110" strokeWidth={2.5} />}
             </Button>
           </div>
         </div>
