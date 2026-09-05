@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
-  const configuredBase = process.env.BACKEND_URL || 'https://detelder-be.vercel.app/';
-  const base = configuredBase.endsWith('/') ? configuredBase : `${configuredBase}/`;
+  // Sandbox grafica Operatore: usa sempre il backend TEST Vercel corrente.
+  // Non usa il vecchio VPS e non dipende da variabili ambiente residue.
+  const base = 'https://detelder-be.vercel.app/';
   const rawPath = typeof req.query.path === 'string' ? req.query.path : '';
 
   if (!rawPath || rawPath.includes('://')) {
