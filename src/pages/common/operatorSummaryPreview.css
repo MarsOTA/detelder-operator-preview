@@ -8,6 +8,7 @@
   background-origin: initial !important;
   background-clip: border-box !important;
   overflow: hidden;
+  margin-bottom: 20px !important;
 }
 
 /* Variante cromatica per distinguere le due card */
@@ -20,12 +21,47 @@
   background-color: #153d3a !important;
 }
 
+/* Footer card evento: nessun padding sotto e divisore centrale ripristinato */
+.info-personale-content {
+  border-top: 1px solid #335064 !important;
+  display: flex;
+  align-items: center;
+  margin-top: 15px !important;
+  padding-top: 10px !important;
+  padding-bottom: 0 !important;
+}
+
+.referente-evento {
+  border-left: 1px solid #335064 !important;
+  border-right: 0 !important;
+}
+
+/* Orologio check-in: secondi a metà dimensione */
+.timer-value {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+}
+
+.timer-main {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.timer-seconds {
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 600;
+}
+
 .sintesi-container {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   align-items: stretch;
   gap: 12px;
   margin-top: 18px;
+  margin-bottom: 44px !important;
 }
 
 .ore-mese-sintesi,
@@ -158,6 +194,15 @@
 @media (max-width: 420px) {
   .sintesi-container {
     gap: 12px !important;
+    margin-bottom: 52px !important;
+  }
+
+  .timer-main {
+    font-size: 40px;
+  }
+
+  .timer-seconds {
+    font-size: 20px;
   }
 
   .ore-mese-sintesi,
