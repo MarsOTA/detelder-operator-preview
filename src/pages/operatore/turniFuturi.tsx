@@ -76,61 +76,79 @@ const turniFuturi = () => {
   const mapsHref=(address:string)=>
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 
+  const gruppiTurni = Object.entries(
+    turniFuturi.reduce<Record<string, TurnoEvento[]>>((acc, turno) => {
+      if (!acc[turno.dataTurno]) acc[turno.dataTurno] = [];
+      acc[turno.dataTurno].push(turno);
+      return acc;
+    }, {})
+  );
+
   return (
     <section className="main-section">
       <div className="titolo">Turni futuri</div>
 
-      {turniFuturi.map((turnoFuturo)=>(
-        <Card className="turni-futuri-card" key={turnoFuturo.idTurno}>
-          <CardContent className="p-4">
-            <div className="turni-futuri-operativita !pt-2">
-              <div className="turni-futuri-data-content">
-                <div className="turni-futuri-giorno">{formatDay(turnoFuturo.dataTurno)}</div>
-                <div className="turni-futuri-mese">{formatMonthShort(turnoFuturo.dataTurno)}</div>
+      {gruppiTurni.map(([dataTurno, turniGiorno])=>(
+        <Card className="turni-futuri-card overflow-hidden" key={dataTurno}>
+          <CardContent className="p-0">
+            <div className="flex items-center gap-3 border-b border-[#2e5362] bg-[#0b2430] px-4 py-3">
+              <div className="turni-futuri-data-content !w-[58px] shrink-0 !rounded-[9px] !px-0 !py-2">
+                <div className="turni-futuri-giorno !text-[27px]">{formatDay(dataTurno)}</div>
+                <div className="turni-futuri-mese !text-[11px]">{formatMonthShort(dataTurno)}</div>
               </div>
-
-              <div className="min-w-0 flex-1">
-                <span className="turni-futuri-titolo-evento block leading-tight">
-                  {turnoFuturo.titoloEvento}
-                </span>
-
-                <div className="turni-futuri-tipologia-content flex flex-wrap gap-1.5">
-                  <span className="turni-futuri-tipologiaTurno !m-0 !border !border-[#315a78] !bg-[#16344a] !px-2.5 !py-1 !text-[#c9daff]">
-                    {turnoFuturo.tipologiaTurno}
-                  </span>
-                  <span className="turni-futuri-tipoMansione !m-0 !border !border-[#3f766c] !bg-[#173a34] !px-2.5 !py-1 !text-[#9be8ce]">
-                    {turnoFuturo.tipoMansione}
-                  </span>
-                </div>
-
-                <a
-                  className="mt-2 flex min-w-0 items-start gap-1.5 text-[#c9daff]"
-                  href={mapsHref(turnoFuturo.localitaEvento)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Apri ${turnoFuturo.localitaEvento} su Google Maps`}
-                >
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span className="turni-futuri-localita-evento underline underline-offset-2">
-                    {turnoFuturo.localitaEvento}
-                  </span>
-                </a>
-
-                <div className="mt-1 flex items-center gap-1.5">
-                  <Clock className="h-4 w-4 shrink-0 text-[#c9daff]" />
-                  <span className="turni-futuri-Orario">
-                    {turnoFuturo.oraInizio} - {turnoFuturo.oraFine}
-                  </span>
-                </div>
+              <div className="min-w-0">
+                <div className="text-[12px] font-semibold uppercase tracking-[0.05em] text-[#8fb4c5]">Giornata</div>
+                <div className="text-[15px] font-semibold text-[#dce9ed]">{turniGiorno.length} {turniGiorno.length === 1 ? 'turno' : 'turni'}</div>
               </div>
             </div>
 
-            {turnoFuturo.notaTurno&&(
-              <div className="turni-futuri-note-operative-content">
-                <div className="note-operative-label">NOTE OPERATIVE</div>
-                <div className="note-operative-value">{turnoFuturo.notaTurno}</div>
-              </div>
-            )}
+            <div className="divide-y divide-[#2e5362]">
+              {turniGiorno.map((turnoFuturo)=>(
+                <div className="p-4" key={turnoFuturo.idTurno}>
+                  <div className="min-w-0">
+                    <span className="turni-futuri-titolo-evento block leading-tight">
+                      {turnoFuturo.titoloEvento}
+                    </span>
+
+                    <div className="turni-futuri-tipologia-content flex flex-wrap gap-1.5">
+                      <span className="turni-futuri-tipologiaTurno !m-0 !border !border-[#315a78] !bg-[#16344a] !px-2.5 !py-1 !text-[#c9daff]">
+                        {turnoFuturo.tipologiaTurno}
+                      </span>
+                      <span className="turni-futuri-tipoMansione !m-0 !border !border-[#3f766c] !bg-[#173a34] !px-2.5 !py-1 !text-[#9be8ce]">
+                        {turnoFuturo.tipoMansione}
+                      </span>
+                    </div>
+
+                    <a
+                      className="mt-2 flex min-w-0 items-start gap-1.5 text-[#c9daff]"
+                      href={mapsHref(turnoFuturo.localitaEvento)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Apri ${turnoFuturo.localitaEvento} su Google Maps`}
+                    >
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span className="turni-futuri-localita-evento underline underline-offset-2">
+                        {turnoFuturo.localitaEvento}
+                      </span>
+                    </a>
+
+                    <div className="mt-1 flex items-center gap-1.5">
+                      <Clock className="h-4 w-4 shrink-0 text-[#c9daff]" />
+                      <span className="turni-futuri-Orario">
+                        {turnoFuturo.oraInizio} - {turnoFuturo.oraFine}
+                      </span>
+                    </div>
+                  </div>
+
+                  {turnoFuturo.notaTurno&&(
+                    <div className="turni-futuri-note-operative-content !w-full">
+                      <div className="note-operative-label">NOTE OPERATIVE</div>
+                      <div className="note-operative-value">{turnoFuturo.notaTurno}</div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       ))}
