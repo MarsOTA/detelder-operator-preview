@@ -14,10 +14,12 @@ export default async function handler(req, res) {
     'content-type': req.headers['content-type'] || 'application/json',
   };
 
+  // Il backend Detelder accetta il JWT da Authorization: Bearer <token>.
   if (req.headers.authorization) {
     headers.authorization = req.headers.authorization;
   }
 
+  // Manteniamo anche la sessione Express, come fa il frontend ufficiale.
   if (req.headers.cookie) {
     headers.cookie = req.headers.cookie;
   }
@@ -39,14 +41,12 @@ export default async function handler(req, res) {
     const contentType = upstream.headers.get('content-type');
     if (contentType) res.setHeader('content-type', contentType);
 
+    // Riporta il cookie di sessione del backend sul dominio della preview.
+    // Eliminiamo soltanto un eventuale Domain esplicito: Path/HttpOnly/SameSite
+    // restano quelli decisi dal backend.
     const setCookie = upstream.headers.get('set-cookie');
     if (setCookie) {
-      // Riscrive il cookie di sessione sul dominio della preview Vercel.
-      // Il Bearer token resta comunque il metodo primario di autenticazione.
-      const rewritten = setCookie
-        .replace(/;\s*Domain=[^;]+/gi, '')
-        .replace(/;\s*SameSite=Lax/gi, '; SameSite=None')
-        .replace(/;\s*SameSite=Strict/gi, '; SameSite=None');
+      const rewritten = setCookie.replace(/;\s*Domain=[^;]+/gi, '');
       res.setHeader('set-cookie', rewritten);
     }
 
