@@ -60,13 +60,16 @@ const turniFuturiDemo:TurnoEvento[] = [
 const turniFuturi = () => {
   const turniFuturi = turniFuturiDemo;
 
-  const formatMonthShort=(input:string):string=>{
-    const [day,month,year]=input.split('/');
-    if(!day||!month||!year)return 'Data non valida';
-    const date=new Date(Number(year),Number(month)-1,Number(day));
-    if(isNaN(date.getTime()))return 'Data non valida';
-    return date.toLocaleDateString('it-IT',{month:'long'}).substring(0,3).toUpperCase()
+  const parseDate=(input:string)=>{
+    const [day,month,year]=input.split('/').map(Number);
+    return new Date(year,month-1,day);
   };
+
+  const formatMonthLong=(input:string):string=>
+    parseDate(input).toLocaleDateString('it-IT',{month:'long'}).toUpperCase();
+
+  const formatWeekday=(input:string):string=>
+    parseDate(input).toLocaleDateString('it-IT',{weekday:'long'}).toUpperCase();
 
   const formatDay=(input:string):string=>{
     const [day]=input.split('/');
@@ -91,12 +94,22 @@ const turniFuturi = () => {
       {gruppiTurni.map(([dataTurno, turniGiorno])=>(
         <Card className="turni-futuri-card overflow-hidden" key={dataTurno}>
           <CardContent className="p-0">
-            <div className="flex items-center gap-3 border-b border-[#2e5362] bg-[#0b2430] px-4 py-2.5">
-              <div className="turni-futuri-data-content !w-[54px] shrink-0 !rounded-[9px] !px-0 !py-1.5">
-                <div className="turni-futuri-giorno !text-[25px]">{formatDay(dataTurno)}</div>
-                <div className="turni-futuri-mese !text-[10px]">{formatMonthShort(dataTurno)}</div>
+            <div className="flex min-h-[74px] w-full items-center justify-between gap-4 border-b border-[#2e5362] bg-[#0b2430] px-4 py-3">
+              <div className="min-w-0 flex-1">
+                <div className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#8fd8c3]">
+                  {formatWeekday(dataTurno)}
+                </div>
+                <div className="mt-0.5 flex items-baseline gap-2">
+                  <span className="text-[30px] font-extrabold leading-none text-[#ccffec]">
+                    {formatDay(dataTurno)}
+                  </span>
+                  <span className="truncate text-[17px] font-bold uppercase tracking-[0.02em] text-[#9be8ce]">
+                    {formatMonthLong(dataTurno)}
+                  </span>
+                </div>
               </div>
-              <div className="text-[13px] font-semibold text-[#9fb3c4]">
+
+              <div className="shrink-0 rounded-full border border-[#315a78] bg-[#102937] px-3 py-1.5 text-[12px] font-semibold text-[#b9d6e8]">
                 {turniGiorno.length} {turniGiorno.length === 1 ? 'turno' : 'turni'}
               </div>
             </div>
