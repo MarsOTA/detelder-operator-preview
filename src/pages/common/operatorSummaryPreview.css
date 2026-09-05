@@ -10,7 +10,7 @@
   overflow: hidden;
 }
 
-/* Secondo evento: variante cromatica discreta per distinguere le card */
+/* Variante cromatica per distinguere le due card */
 .card-turni-alt {
   background: #172f36 !important;
   border-color: #3f766c !important;
@@ -44,10 +44,10 @@
 .ore-mese-label,
 .prossimi-turni-label {
   margin: 0 0 10px 0 !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
   line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: .01em;
+  font-weight: 700;
+  letter-spacing: .03em;
   flex: 0 0 auto;
 }
 
@@ -66,9 +66,9 @@
 }
 
 .ore-mese-value-content svg {
-  width: 28px !important;
-  height: 28px !important;
-  flex: 0 0 28px;
+  width: 56px !important;
+  height: 56px !important;
+  flex: 0 0 56px;
 }
 
 .ore-mese-value {
@@ -76,9 +76,9 @@
   min-width: 0;
   font-size: 25px !important;
   line-height: 1 !important;
-  font-weight: 900 !important;
+  font-weight: 800 !important;
   white-space: nowrap !important;
-  letter-spacing: -0.02em;
+  letter-spacing: -.02em;
 }
 
 .ore-label {
@@ -171,14 +171,14 @@
   }
 
   .ore-mese-value-content svg {
-    width: 25px !important;
-    height: 25px !important;
-    flex-basis: 25px;
+    width: 50px !important;
+    height: 50px !important;
+    flex-basis: 50px;
   }
 
   .ore-mese-value {
-    font-size: 21px !important;
-    letter-spacing: -0.03em;
+    font-size: 25px !important;
+    letter-spacing: -.02em;
   }
 
   .ore-label {
@@ -195,6 +195,6 @@
   }
 
   .prossimi-turni-value-content {
-    font-size: 11px !important;
+    font-size: 15px !important;
   }
 }
