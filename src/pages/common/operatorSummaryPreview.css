@@ -44,6 +44,14 @@
   margin-bottom: 8px !important;
 }
 
+/* Note operative: quasi tutta larghezza, mantenendo il rientro laterale della card */
+.note-operative-content {
+  width: 96% !important;
+  max-width: none !important;
+  margin-right: 4% !important;
+  box-sizing: border-box;
+}
+
 /* Footer card evento: nessun padding sotto e divisore centrale ripristinato */
 .info-personale-content {
   border-top: 1px solid #335064 !important;
