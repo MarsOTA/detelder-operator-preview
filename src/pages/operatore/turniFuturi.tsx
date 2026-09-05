@@ -91,26 +91,32 @@ const turniFuturi = () => {
       {gruppiTurni.map(([dataTurno, turniGiorno])=>(
         <Card className="turni-futuri-card overflow-hidden" key={dataTurno}>
           <CardContent className="p-0">
-            <div className="flex items-center gap-3 border-b border-[#2e5362] bg-[#0b2430] px-4 py-3">
-              <div className="turni-futuri-data-content !w-[58px] shrink-0 !rounded-[9px] !px-0 !py-2">
-                <div className="turni-futuri-giorno !text-[27px]">{formatDay(dataTurno)}</div>
-                <div className="turni-futuri-mese !text-[11px]">{formatMonthShort(dataTurno)}</div>
+            <div className="flex items-center gap-3 border-b border-[#2e5362] bg-[#0b2430] px-4 py-2.5">
+              <div className="turni-futuri-data-content !w-[54px] shrink-0 !rounded-[9px] !px-0 !py-1.5">
+                <div className="turni-futuri-giorno !text-[25px]">{formatDay(dataTurno)}</div>
+                <div className="turni-futuri-mese !text-[10px]">{formatMonthShort(dataTurno)}</div>
               </div>
-              <div className="min-w-0">
-                <div className="text-[12px] font-semibold uppercase tracking-[0.05em] text-[#8fb4c5]">Giornata</div>
-                <div className="text-[15px] font-semibold text-[#dce9ed]">{turniGiorno.length} {turniGiorno.length === 1 ? 'turno' : 'turni'}</div>
+              <div className="text-[13px] font-semibold text-[#9fb3c4]">
+                {turniGiorno.length} {turniGiorno.length === 1 ? 'turno' : 'turni'}
               </div>
             </div>
 
             <div className="divide-y divide-[#2e5362]">
-              {turniGiorno.map((turnoFuturo)=>(
+              {[...turniGiorno].sort((a,b)=>a.oraInizio.localeCompare(b.oraInizio)).map((turnoFuturo)=>(
                 <div className="p-4" key={turnoFuturo.idTurno}>
                   <div className="min-w-0">
-                    <span className="turni-futuri-titolo-evento block leading-tight">
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-5 w-5 shrink-0 text-[#9be8ce]" strokeWidth={1.8} />
+                      <span className="text-[24px] font-extrabold leading-none tracking-[-0.02em] text-[#ccffec]">
+                        {turnoFuturo.oraInizio} - {turnoFuturo.oraFine}
+                      </span>
+                    </div>
+
+                    <span className="turni-futuri-titolo-evento mt-2 block !text-[18px] !font-bold leading-tight !text-[#f2f7fc]">
                       {turnoFuturo.titoloEvento}
                     </span>
 
-                    <div className="turni-futuri-tipologia-content flex flex-wrap gap-1.5">
+                    <div className="turni-futuri-tipologia-content mt-2 flex flex-wrap gap-1.5">
                       <span className="turni-futuri-tipologiaTurno !m-0 !border !border-[#315a78] !bg-[#16344a] !px-2.5 !py-1 !text-[#c9daff]">
                         {turnoFuturo.tipologiaTurno}
                       </span>
@@ -131,13 +137,6 @@ const turniFuturi = () => {
                         {turnoFuturo.localitaEvento}
                       </span>
                     </a>
-
-                    <div className="mt-1 flex items-center gap-1.5">
-                      <Clock className="h-4 w-4 shrink-0 text-[#c9daff]" />
-                      <span className="turni-futuri-Orario">
-                        {turnoFuturo.oraInizio} - {turnoFuturo.oraFine}
-                      </span>
-                    </div>
                   </div>
 
                   {turnoFuturo.notaTurno&&(
