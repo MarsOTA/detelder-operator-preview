@@ -1,6 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { ezystaffBEUrl } from "@/utils/baseUrl";
-import { useEffect, useState } from "react";
 import { MapPin, Clock } from "lucide-react";
 
 type TurnoEvento = {
@@ -60,30 +58,7 @@ const turniFuturiDemo:TurnoEvento[] = [
 ];
 
 const turniFuturi = () => {
-  const idOperatore = localStorage.getItem('idOperatore');
-  const [turniFuturi,setTurniFuturi]=useState<TurnoEvento[]>(turniFuturiDemo);
-
-  useEffect(()=>{caricaTurniAssegnati();},[])
-
-  const caricaTurniAssegnati=async()=>{
-    try {
-      const resp=await fetch(ezystaffBEUrl+`turni/turniFuturi/${idOperatore}`,{
-        headers:{
-          'Authorization':`Bearer ${localStorage.getItem('token')}`,
-          'Content-Type':'application/json',
-          accept:'application/json'
-        },
-        credentials:'include'
-      });
-
-      if(!resp.ok) return;
-
-      const data=await resp.json();
-      if(Array.isArray(data) && data.length>0) setTurniFuturi(data)
-    } catch {
-      // Nella preview restano visibili i dati demo per verificare il layout.
-    }
-  }
+  const turniFuturi = turniFuturiDemo;
 
   const formatMonthShort=(input:string):string=>{
     const [day,month,year]=input.split('/');
