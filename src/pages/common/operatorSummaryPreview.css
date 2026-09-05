@@ -1,24 +1,31 @@
 /* Preview tweak: dashboard riepilogo finale operatore allineato allo SVG */
 
-/* Card evento: bordo semplice, niente doppio fondo/linguetta */
+/* Card evento: bordo semplice con linguetta superiore accentata */
 .card-turni {
-  border: 1px solid #4e8979 !important;
+  border: 1px solid #3f5870 !important;
+  border-top: 4px solid #68a7ff !important;
   background: #1c2b3c !important;
   background-image: none !important;
   background-origin: initial !important;
   background-clip: border-box !important;
   overflow: hidden;
-  margin-bottom: 20px !important;
+  margin-bottom: 32px !important;
 }
 
-/* Variante cromatica per distinguere le due card */
+/* Prima card / turno corrente: accento verde */
 .card-turni-alt {
   background: #172f36 !important;
   border-color: #3f766c !important;
+  border-top-color: #00ffb8 !important;
 }
 
 .card-turni-alt .info-orario-turno {
   background-color: #153d3a !important;
+}
+
+/* Badge più distanziato dall'orario */
+.stato-turno {
+  margin-bottom: 8px !important;
 }
 
 /* Footer card evento: nessun padding sotto e divisore centrale ripristinato */
