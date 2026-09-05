@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const configuredBase = process.env.BACKEND_URL || 'http://51.91.59.187:3501/';
+  const configuredBase = process.env.BACKEND_URL || 'https://detelder-be.vercel.app/';
   const base = configuredBase.endsWith('/') ? configuredBase : `${configuredBase}/`;
   const rawPath = typeof req.query.path === 'string' ? req.query.path : '';
 
@@ -14,12 +14,10 @@ export default async function handler(req, res) {
     'content-type': req.headers['content-type'] || 'application/json',
   };
 
-  // Il backend Detelder accetta il JWT da Authorization: Bearer <token>.
   if (req.headers.authorization) {
     headers.authorization = req.headers.authorization;
   }
 
-  // Manteniamo anche la sessione Express, come fa il frontend ufficiale.
   if (req.headers.cookie) {
     headers.cookie = req.headers.cookie;
   }
@@ -41,15 +39,13 @@ export default async function handler(req, res) {
     const contentType = upstream.headers.get('content-type');
     if (contentType) res.setHeader('content-type', contentType);
 
-    // Riporta il cookie di sessione del backend sul dominio della preview.
-    // Eliminiamo soltanto un eventuale Domain esplicito: Path/HttpOnly/SameSite
-    // restano quelli decisi dal backend.
     const setCookie = upstream.headers.get('set-cookie');
     if (setCookie) {
       const rewritten = setCookie.replace(/;\s*Domain=[^;]+/gi, '');
       res.setHeader('set-cookie', rewritten);
     }
 
+    res.setHeader('x-preview-backend', base);
     res.status(upstream.status).send(text);
   } catch (error) {
     console.error('Detelder preview proxy error', error);
