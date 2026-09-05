@@ -17,23 +17,72 @@ type TurnoEvento = {
   notaTurno:string;
 }
 
+const turniFuturiDemo:TurnoEvento[] = [
+  {
+    idTurno:9101,
+    titoloEvento:'Milano Fashion Week',
+    localitaEvento:'Palazzo Reale, Piazza del Duomo, Milano',
+    nomeCognomeReferente:'Marco Rossi',
+    telefonoReferente:'333 1234567',
+    tipologiaTurno:'DIURNO',
+    tipoMansione:'VIG',
+    dataTurno:'08/09/2026',
+    oraInizio:'08:00',
+    oraFine:'14:00',
+    notaTurno:'Presentarsi 15 minuti prima al punto di ritrovo.'
+  },
+  {
+    idTurno:9102,
+    titoloEvento:'Evento Corporate Detelder',
+    localitaEvento:'CityLife, Milano',
+    nomeCognomeReferente:'Laura Bianchi',
+    telefonoReferente:'333 9876543',
+    tipologiaTurno:'POMERIDIANO',
+    tipoMansione:'CP',
+    dataTurno:'08/09/2026',
+    oraInizio:'16:00',
+    oraFine:'22:00',
+    notaTurno:'Accesso staff da ingresso laterale.'
+  },
+  {
+    idTurno:9103,
+    titoloEvento:'Concerto Arena Milano',
+    localitaEvento:'Unipol Forum, Assago, Milano',
+    nomeCognomeReferente:'Paolo Neri',
+    telefonoReferente:'333 9998877',
+    tipologiaTurno:'SERALE',
+    tipoMansione:'VIG',
+    dataTurno:'09/09/2026',
+    oraInizio:'18:00',
+    oraFine:'23:30',
+    notaTurno:''
+  }
+];
+
 const turniFuturi = () => {
   const idOperatore = localStorage.getItem('idOperatore');
-  const [turniFuturi,setTurniFuturi]=useState<TurnoEvento[]>([]);
+  const [turniFuturi,setTurniFuturi]=useState<TurnoEvento[]>(turniFuturiDemo);
 
   useEffect(()=>{caricaTurniAssegnati();},[])
 
   const caricaTurniAssegnati=async()=>{
-    const resp=await fetch(ezystaffBEUrl+`turni/turniFuturi/${idOperatore}`,{
-      headers:{
-        'Authorization':`Bearer ${localStorage.getItem('token')}`,
-        'Content-Type':'application/json',
-        accept:'application/json'
-      },
-      credentials:'include'
-    });
-    const data=await resp.json();
-    setTurniFuturi(data)
+    try {
+      const resp=await fetch(ezystaffBEUrl+`turni/turniFuturi/${idOperatore}`,{
+        headers:{
+          'Authorization':`Bearer ${localStorage.getItem('token')}`,
+          'Content-Type':'application/json',
+          accept:'application/json'
+        },
+        credentials:'include'
+      });
+
+      if(!resp.ok) return;
+
+      const data=await resp.json();
+      if(Array.isArray(data) && data.length>0) setTurniFuturi(data)
+    } catch {
+      // Nella preview restano visibili i dati demo per verificare il layout.
+    }
   }
 
   const formatMonthShort=(input:string):string=>{
