@@ -1,6 +1,6 @@
 /* Preview tweak: dashboard riepilogo finale operatore allineato allo SVG */
 
-/* Card evento: bordo semplice con linguetta superiore accentata */
+/* Card evento: linguetta superiore accentata senza spazio/bordo tra accento e header */
 .card-turni {
   border: 1px solid #3f5870 !important;
   border-top: 4px solid #68a7ff !important;
@@ -10,6 +10,11 @@
   background-clip: border-box !important;
   overflow: hidden;
   margin-bottom: 32px !important;
+  padding-top: 0 !important;
+}
+
+.card-turni > .turno-content {
+  padding-top: 0 !important;
 }
 
 /* Prima card / turno corrente: accento verde */
@@ -21,6 +26,12 @@
 
 .card-turni-alt .info-orario-turno {
   background-color: #153d3a !important;
+}
+
+/* L'header orario deve aderire direttamente alla linguetta superiore */
+.info-orario-turno {
+  margin-top: 0 !important;
+  border-top: 0 !important;
 }
 
 /* Badge più distanziato dall'orario */
@@ -147,9 +158,9 @@
 .prossimi-turni-next-content {
   flex: 0 0 54px;
   width: 54px !important;
-  min-width: 54px !important;
-  height: 58px !important;
-  min-height: 58px !important;
+  min-width: 18px !important;
+  height: 52px !important;
+  min-height: 52px !important;
   padding: 6px !important;
   border-radius: 10px;
   display: flex !important;
@@ -239,11 +250,11 @@
   }
 
   .prossimi-turni-next-content {
-    flex-basis: 52px;
-    width: 52px !important;
-    min-width: 52px !important;
-    height: 56px !important;
-    min-height: 56px !important;
+    flex-basis: 54px;
+    width: 54px !important;
+    min-width: 18px !important;
+    height: 52px !important;
+    min-height: 52px !important;
   }
 
   .prossimi-turni-value-content {
