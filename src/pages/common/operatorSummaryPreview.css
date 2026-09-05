@@ -229,6 +229,43 @@
   line-height: 1 !important;
 }
 
+/* Turni futuri: data più compatta e più spazio ai contenuti */
+.turni-futuri-operativita {
+  gap: 10px !important;
+  align-items: flex-start !important;
+}
+
+.turni-futuri-data-content {
+  flex: 0 0 48px !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  padding: 5px 4px !important;
+  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.turni-futuri-operativita > div:last-child {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.turni-futuri-giorno {
+  font-size: 22px !important;
+  line-height: 1 !important;
+  font-weight: 800 !important;
+}
+
+.turni-futuri-mese {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  margin-top: 3px !important;
+}
+
 @media (max-width: 420px) {
   .sintesi-container {
     gap: 12px !important;
