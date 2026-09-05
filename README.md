@@ -6,7 +6,7 @@ Sandbox separata per la UI Operatore, derivata dalla branch OTA-DIGITAL/ezystaff
 
 - vedere online gli stili Operatore senza installare Node sul Mac;
 - usare dati reali tramite un proxy Vercel;
-- modificare principalmente `src/styleOperatori.css`;
+- modificare principalmente `src/pages/common/styleOperatori.css`;
 - non toccare `MarsOTA/detelder-fe`;
 - non eseguire Check-in, approvazioni o modifiche sul database dalla preview.
 
@@ -22,6 +22,6 @@ Se non specificata, il proxy usa il backend storico `http://51.91.59.187:3501/`.
 
 ## File UI principale
 
-`src/styleOperatori.css`
+`src/pages/common/styleOperatori.css`
 
 Il file è stato copiato dalla branch ufficiale del dev al momento della creazione della sandbox.
