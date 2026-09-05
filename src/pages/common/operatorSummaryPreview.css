@@ -52,6 +52,13 @@
   box-sizing: border-box;
 }
 
+/* Turni futuri: note operative larghe quanto il contenuto utile della card */
+.turni-futuri-note-operative-content {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box;
+}
+
 /* Footer card evento: nessun padding sotto e divisore centrale ripristinato */
 .info-personale-content {
   border-top: 1px solid #335064 !important;
