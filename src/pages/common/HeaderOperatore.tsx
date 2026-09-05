@@ -25,11 +25,11 @@ const HeaderOperatore = () => {
   const toggleMenu = () => setMenuOpen(prev => !prev);
 
   const navButtonClass = (active: boolean, mobile = false) => [
-    "cursor-pointer rounded-xl border-0 font-semibold transition-colors",
+    "cursor-pointer rounded-xl border-0 font-semibold transition-colors duration-150",
     mobile ? "h-12 w-full justify-start px-4 text-[15px]" : "h-10 px-3 text-sm",
     active
       ? "border-l-[3px] border-l-[#00ffb8] bg-[#153d3a] text-[#9be8ce] hover:bg-[#153d3a] hover:text-[#9be8ce]"
-      : "border-l-[3px] border-l-transparent bg-[#102330] text-[#f5f7fb] hover:bg-[#172f36] hover:text-[#9be8ce]"
+      : "border-l-[3px] border-l-transparent bg-transparent text-[#d7e2e8] hover:bg-[#102330] hover:text-[#9be8ce]"
   ].join(" ");
 
   const iconClass = "mr-3 h-5 w-5 shrink-0";
@@ -38,7 +38,7 @@ const HeaderOperatore = () => {
     <header className="operatore-header">
       <div className="container mx-auto flex flex-col px-4 md:flex-row md:items-center md:justify-between">
         <div className="flex min-h-[64px] w-full items-center justify-between md:w-auto">
-          <div className="h-14 w-36">
+          <div className="h-14 w-40">
             <img src="/assets/logo.svg" alt="Logo" className="block h-full w-full object-contain" />
           </div>
 
@@ -48,6 +48,7 @@ const HeaderOperatore = () => {
               size="icon"
               onClick={toggleMenu}
               aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
+              aria-expanded={menuOpen}
               className="h-11 w-11 rounded-xl text-[#00ffb8] hover:bg-[#102330] hover:text-[#00ffb8]"
             >
               {menuOpen ? <X className="h-9 w-9" /> : <Menu className="h-9 w-9" />}
@@ -56,7 +57,7 @@ const HeaderOperatore = () => {
         </div>
 
         <nav className="hidden items-center gap-2 md:flex">
-          <div className="inline-flex h-10 items-center rounded-xl border border-[#3f766c] bg-[#173a34] px-3 text-sm font-semibold text-[#9be8ce]">
+          <div className="inline-flex h-9 items-center px-2 text-[13px] font-medium text-[#9fbfb6]">
             {operatoreLoggato}
           </div>
 
@@ -68,7 +69,7 @@ const HeaderOperatore = () => {
 
           <Link to="/operator/turniFuturi">
             <Button variant="ghost" className={navButtonClass(location.pathname === "/operator/turniFuturi")}>
-              <CalendarClock className="mr-2 h-4 w-4" />Turni Futuri
+              <CalendarClock className="mr-2 h-4 w-4" />Turni futuri
             </Button>
           </Link>
 
@@ -82,48 +83,58 @@ const HeaderOperatore = () => {
             <Button
               variant="ghost"
               onClick={logout}
-              className="h-10 cursor-pointer rounded-xl border-0 bg-transparent px-3 text-sm font-semibold text-[#d7e2e8] hover:bg-[#301f22] hover:text-[#f1b6b6]"
+              className="h-10 cursor-pointer rounded-xl border-0 bg-transparent px-3 text-sm font-semibold text-[#c7d4da] hover:bg-[#301f22] hover:text-[#f1b6b6]"
             >
               <LogOut className="mr-2 h-4 w-4" />Logout
             </Button>
           </div>
         </nav>
 
-        {menuOpen && (
-          <nav className="flex flex-col gap-2 pb-4 pt-2 md:hidden">
-            <div className="mb-1 inline-flex h-10 self-start items-center rounded-xl border border-[#3f766c] bg-[#173a34] px-3 text-sm font-semibold text-[#9be8ce]">
-              {operatoreLoggato}
-            </div>
+        <div
+          aria-hidden={!menuOpen}
+          className={`grid transition-[grid-template-rows,opacity,transform] duration-200 ease-out md:hidden ${
+            menuOpen
+              ? "grid-rows-[1fr] translate-y-0 opacity-100"
+              : "pointer-events-none grid-rows-[0fr] -translate-y-1 opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <nav className="flex flex-col gap-1.5 pb-4 pt-1">
+              <div className="mb-1 flex items-center gap-2 px-1 py-1 text-[13px] font-medium text-[#9fbfb6]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#3f766c]" />
+                {operatoreLoggato}
+              </div>
 
-            <Link to="/operator" onClick={toggleMenu}>
-              <Button variant="ghost" className={navButtonClass(location.pathname === "/operator", true)}>
-                <Briefcase className={iconClass} />Turni di oggi
-              </Button>
-            </Link>
+              <Link to="/operator" onClick={toggleMenu}>
+                <Button variant="ghost" className={navButtonClass(location.pathname === "/operator", true)}>
+                  <Briefcase className={iconClass} />Turni di oggi
+                </Button>
+              </Link>
 
-            <Link to="/operator/turniFuturi" onClick={toggleMenu}>
-              <Button variant="ghost" className={navButtonClass(location.pathname === "/operator/turniFuturi", true)}>
-                <CalendarClock className={iconClass} />Turni Futuri
-              </Button>
-            </Link>
+              <Link to="/operator/turniFuturi" onClick={toggleMenu}>
+                <Button variant="ghost" className={navButtonClass(location.pathname === "/operator/turniFuturi", true)}>
+                  <CalendarClock className={iconClass} />Turni futuri
+                </Button>
+              </Link>
 
-            <Link to="/operator/rendicontazione" onClick={toggleMenu}>
-              <Button variant="ghost" className={navButtonClass(location.pathname === "/operator/rendicontazione", true)}>
-                <UserCheck className={iconClass} />Rendicontazione
-              </Button>
-            </Link>
+              <Link to="/operator/rendicontazione" onClick={toggleMenu}>
+                <Button variant="ghost" className={navButtonClass(location.pathname === "/operator/rendicontazione", true)}>
+                  <UserCheck className={iconClass} />Rendicontazione
+                </Button>
+              </Link>
 
-            <div className="mt-2 border-t border-[#264556] pt-3">
-              <Button
-                variant="ghost"
-                onClick={logout}
-                className="h-12 w-full cursor-pointer justify-start rounded-xl border-0 bg-transparent px-4 text-[15px] font-semibold text-[#d7e2e8] hover:bg-[#301f22] hover:text-[#f1b6b6]"
-              >
-                <LogOut className={iconClass} />Logout
-              </Button>
-            </div>
-          </nav>
-        )}
+              <div className="mt-1 border-t border-[#264556] pt-2">
+                <Button
+                  variant="ghost"
+                  onClick={logout}
+                  className="h-11 w-full cursor-pointer justify-start rounded-xl border-0 bg-transparent px-4 text-[15px] font-semibold text-[#c7d4da] hover:bg-[#301f22] hover:text-[#f1b6b6]"
+                >
+                  <LogOut className={iconClass} />Logout
+                </Button>
+              </div>
+            </nav>
+          </div>
+        </div>
       </div>
     </header>
   )
