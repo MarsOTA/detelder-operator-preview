@@ -65,8 +65,10 @@ const turniFuturi = () => {
     return new Date(year,month-1,day);
   };
 
-  const formatMonthLong=(input:string):string=>
-    parseDate(input).toLocaleDateString('it-IT',{month:'long'}).toUpperCase();
+  const formatMonthLong=(input:string):string=>{
+    const mese = parseDate(input).toLocaleDateString('it-IT',{month:'long'});
+    return mese.charAt(0).toUpperCase() + mese.slice(1);
+  };
 
   const formatWeekday=(input:string):string=>
     parseDate(input).toLocaleDateString('it-IT',{weekday:'long'}).toUpperCase();
@@ -103,7 +105,7 @@ const turniFuturi = () => {
                   <span className="text-[30px] font-extrabold leading-none text-[#f2fffb]">
                     {formatDay(dataTurno)}
                   </span>
-                  <span className="truncate text-[17px] font-bold uppercase tracking-[0.02em] text-[#b9f1df]">
+                  <span className="truncate text-[17px] font-bold tracking-[0.02em] text-white">
                     {formatMonthLong(dataTurno)}
                   </span>
                 </div>
@@ -125,7 +127,7 @@ const turniFuturi = () => {
                       </span>
                     </div>
 
-                    <span className="turni-futuri-titolo-evento mt-2 block !text-[18px] !font-bold leading-tight !text-[#f2f7fc]">
+                    <span className="turni-futuri-titolo-evento mt-2 block !text-[18px] !font-[700] leading-tight !text-[#f2f7fc]">
                       {turnoFuturo.titoloEvento}
                     </span>
 
