@@ -65,13 +65,13 @@ const turniFuturi = () => {
     return new Date(year,month-1,day);
   };
 
-  const formatMonthLong=(input:string):string=>{
-    const mese = parseDate(input).toLocaleDateString('it-IT',{month:'long'});
-    return mese.charAt(0).toUpperCase() + mese.slice(1);
-  };
+  const formatMonthLong=(input:string):string=>
+    parseDate(input).toLocaleDateString('it-IT',{month:'long'}).toUpperCase();
 
-  const formatWeekday=(input:string):string=>
-    parseDate(input).toLocaleDateString('it-IT',{weekday:'long'}).toUpperCase();
+  const formatWeekday=(input:string):string=>{
+    const giorno = parseDate(input).toLocaleDateString('it-IT',{weekday:'long'});
+    return giorno.charAt(0).toUpperCase() + giorno.slice(1);
+  };
 
   const formatDay=(input:string):string=>{
     const [day]=input.split('/');
@@ -98,7 +98,7 @@ const turniFuturi = () => {
           <CardContent className="p-0">
             <div className="flex min-h-[74px] w-full items-center justify-between gap-4 border-b border-[#4f8278] bg-[#123b3b] px-4 py-3 shadow-[inset_0_-1px_0_rgba(155,232,206,0.08)]">
               <div className="min-w-0 flex-1">
-                <div className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#a7e6d2]">
+                <div className="text-[12px] font-bold tracking-[0.08em] text-[#a7e6d2]">
                   {formatWeekday(dataTurno)}
                 </div>
                 <div className="mt-0.5 flex items-baseline gap-2">
