@@ -94,22 +94,22 @@ const turniFuturi = () => {
       {gruppiTurni.map(([dataTurno, turniGiorno])=>(
         <Card className="turni-futuri-card overflow-hidden" key={dataTurno}>
           <CardContent className="p-0">
-            <div className="flex min-h-[74px] w-full items-center justify-between gap-4 border-b border-[#2e5362] bg-[#0b2430] px-4 py-3">
+            <div className="flex min-h-[74px] w-full items-center justify-between gap-4 border-b border-[#4f8278] bg-[#123b3b] px-4 py-3 shadow-[inset_0_-1px_0_rgba(155,232,206,0.08)]">
               <div className="min-w-0 flex-1">
-                <div className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#8fd8c3]">
+                <div className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#a7e6d2]">
                   {formatWeekday(dataTurno)}
                 </div>
                 <div className="mt-0.5 flex items-baseline gap-2">
-                  <span className="text-[30px] font-extrabold leading-none text-[#ccffec]">
+                  <span className="text-[30px] font-extrabold leading-none text-[#f2fffb]">
                     {formatDay(dataTurno)}
                   </span>
-                  <span className="truncate text-[17px] font-bold uppercase tracking-[0.02em] text-[#9be8ce]">
+                  <span className="truncate text-[17px] font-bold uppercase tracking-[0.02em] text-[#b9f1df]">
                     {formatMonthLong(dataTurno)}
                   </span>
                 </div>
               </div>
 
-              <div className="shrink-0 rounded-full border border-[#315a78] bg-[#102937] px-3 py-1.5 text-[12px] font-semibold text-[#b9d6e8]">
+              <div className="shrink-0 rounded-full border border-[#5b9186] bg-[#0d2d31] px-3 py-1.5 text-[12px] font-semibold text-[#ccefe5]">
                 {turniGiorno.length} {turniGiorno.length === 1 ? 'turno' : 'turni'}
               </div>
             </div>
