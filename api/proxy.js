@@ -18,9 +18,14 @@ export default async function handler(req, res) {
     headers.authorization = req.headers.authorization;
   }
 
+  if (req.headers.cookie) {
+    headers.cookie = req.headers.cookie;
+  }
+
   const init = {
     method: req.method,
     headers,
+    redirect: 'manual',
   };
 
   if (req.method !== 'GET' && req.method !== 'HEAD' && typeof req.body !== 'undefined') {
@@ -30,8 +35,21 @@ export default async function handler(req, res) {
   try {
     const upstream = await fetch(target, init);
     const text = await upstream.text();
+
     const contentType = upstream.headers.get('content-type');
     if (contentType) res.setHeader('content-type', contentType);
+
+    const setCookie = upstream.headers.get('set-cookie');
+    if (setCookie) {
+      // Riscrive il cookie di sessione sul dominio della preview Vercel.
+      // Il Bearer token resta comunque il metodo primario di autenticazione.
+      const rewritten = setCookie
+        .replace(/;\s*Domain=[^;]+/gi, '')
+        .replace(/;\s*SameSite=Lax/gi, '; SameSite=None')
+        .replace(/;\s*SameSite=Strict/gi, '; SameSite=None');
+      res.setHeader('set-cookie', rewritten);
+    }
+
     res.status(upstream.status).send(text);
   } catch (error) {
     console.error('Detelder preview proxy error', error);
