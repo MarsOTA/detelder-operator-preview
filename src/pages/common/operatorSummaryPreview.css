@@ -1,0 +1,131 @@
+/* Preview tweak: dashboard riepilogo finale operatore */
+
+.sintesi-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.ore-mese-sintesi,
+.prossimi-turni-sintesi {
+  min-height: 158px;
+  padding: 18px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.ore-mese-label,
+.prossimi-turni-label {
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.ore-mese-value-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 8px;
+}
+
+.ore-mese-value {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.ore-label {
+  align-self: flex-end;
+  margin-bottom: 3px;
+}
+
+.prossimi-turni-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 2px 0 8px;
+}
+
+.prossimi-turni-next-content {
+  min-width: 68px;
+  min-height: 68px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 255, 184, .20);
+  background: rgba(0, 255, 184, .07);
+  box-sizing: border-box;
+}
+
+.prossimi-turni-mese-value {
+  font-size: 11px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.prossimi-turni-giorno-value {
+  margin-top: 3px;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.prossimi-turni-value-content {
+  flex: 1;
+  text-align: right;
+  line-height: 1.25;
+}
+
+.dettaglio-mese-sintesi,
+.dettaglio-turni-sintesi {
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  min-height: 32px;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .sintesi-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .ore-mese-sintesi,
+  .prossimi-turni-sintesi {
+    min-height: 148px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .ore-mese-value {
+    font-size: 29px;
+  }
+
+  .prossimi-turni-next-content {
+    min-width: 58px;
+    min-height: 62px;
+    padding: 8px;
+  }
+
+  .prossimi-turni-giorno-value {
+    font-size: 24px;
+  }
+
+  .prossimi-turni-value-content {
+    font-size: 13px;
+  }
+}
