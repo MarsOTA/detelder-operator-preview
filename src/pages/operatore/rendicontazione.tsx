@@ -66,7 +66,7 @@ const Rendicontazione=()=>{
    <TabsContent value="archivio" className="mt-3">
     <Accordion type="single" collapsible className="w-full">
      {mesi.map(m=>{const ore=Math.floor(m.totaleMinuti/60),min=m.totaleMinuti%60;return <AccordionItem key={m.meseAnno} value={m.meseAnno} className="archivio-mensile-trigger !mt-3 !overflow-hidden !rounded-[14px] !border-[#294b57] !bg-[#0b1d2a] !px-3 !py-0">
-      <AccordionTrigger className="!py-3 hover:!no-underline [&>svg]:!text-[#9bc7bd]"><div className="flex w-full items-center justify-between gap-3"><span className="archivio-mese-anno !text-[18px] !font-semibold !text-[#f2f7f7]">{m.meseAnno}</span><div className="archivio-giorni-mensili !text-[15px] !font-semibold !text-[#82cdb7]"><span>{String(ore).padStart(2,'0')}:{String(min).padStart(2,'0')} h</span><span className="mx-2">•</span><span>{m.numeroTurni} turni</span></div></div></AccordionTrigger>
+      <AccordionTrigger className="!py-3 hover:!no-underline [&>svg]:!text-[#9bc7bd]"><div className="flex w-full items-center justify-between gap-3"><span className="archivio-mese-anno !text-[18px] !font-semibold !text-[#f2f7f7]">{m.meseAnno}</span><div className="archivio-giorni-mensili !text-[16px] !font-semibold !leading-tight !text-[#82cdb7]"><span>{String(ore).padStart(2,'0')}:{String(min).padStart(2,'0')} h</span><span className="mx-2">•</span><span>{m.numeroTurni} turni</span></div></div></AccordionTrigger>
       <AccordionContent className="!pb-3">
        {turni.map((t,index)=><React.Fragment key={index}>
         <div className="turno-archiviato-content !mt-2 !rounded-[10px] !border-[#2d5553] !bg-[#0c292b] !p-3 !shadow-none">
