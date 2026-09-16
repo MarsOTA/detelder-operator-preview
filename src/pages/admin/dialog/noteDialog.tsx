@@ -12,8 +12,6 @@ interface noteDialogProps {
   };
   setFormDatiNoteTurno: (data: { nota: string; idTurno: number; }) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onClickNuovo: (idTurno: number) => void;
-  idTurno: number;
 }
 
 export const NoteDialog = ({
@@ -21,9 +19,7 @@ export const NoteDialog = ({
   setOpen,
   formDatiNoteTurno,
   setFormDatiNoteTurno,
-  onSubmit,
-  onClickNuovo,
-  idTurno
+  onSubmit
 }: noteDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
