@@ -12,6 +12,8 @@ interface noteDialogProps {
   };
   setFormDatiNoteTurno: (data: { nota: string; idTurno: number; }) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onClickNuovo: (idTurno: number) => void;
+  idTurno: number;
 }
 
 export const NoteDialog = ({
