@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, Circle } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { it } from "date-fns/locale";
+import { Circle } from "lucide-react";
 import { ezystaffBEUrl } from "@/utils/baseUrl";
 import * as XLSX from "xlsx";
 import { format } from 'date-fns';
+import type { DateRange } from "react-day-picker";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import DetelderDateRangePicker from "@/components/filters/DateRangePicker";
 
 type FiltriRicerca = {
     ricercaKeyword: string;
@@ -76,31 +75,11 @@ const turni = () => {
         });
     };
 
-    const setDataInizio = (date: Date | undefined) => {
-        setFiltriRicerca((prev) => {
-            if (!prev) return undefined;
-            return {
-                ...prev,
-                dataInizio: date,
-            };
-        });
-    };
-
-    const setDataFine = (date: Date | undefined) => {
-        setFiltriRicerca((prev) => {
-            if (!prev) return undefined;
-            return {
-                ...prev,
-                dataFine: date,
-            };
-        });
-    };
-
     const formatDateToYYYYMMDD = (date: Date | undefined): string | undefined => {
         if (!date) return undefined;
 
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // mesi 0-based
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
 
         return `${year}-${month}-${day}`;
@@ -133,11 +112,22 @@ const turni = () => {
 
     }
 
+    const applicaRange = (range: DateRange) => {
+        if (!range.from) return;
+
+        const nuoviFiltri: FiltriRicerca = {
+            ricercaKeyword: filtriRicerca?.ricercaKeyword ?? "",
+            dataInizio: range.from,
+            dataFine: range.to ?? range.from,
+        };
+
+        setFiltriRicerca(nuoviFiltri);
+        caricaTurni(nuoviFiltri);
+    };
+
     const handleExportToExcel = () => {
         let dataToExport: any[] = [];
 
-
-        // ✅ Se enabled è true, esporta i turni
         dataToExport = turni.map(turno => ({
             DataTurno: turno.dataTurno ? format(turno.dataTurno, "dd/MM/yyyy") : "",
             NomeEvento: turno.nomeEvento,
@@ -149,8 +139,6 @@ const turni = () => {
             OrePausa: turno.orePausa,
         }));
 
-
-        //Creazione del file Excel
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(
@@ -182,19 +170,18 @@ const turni = () => {
     ): boolean => {
         if (!dataTurno || !oraInizio) return false;
 
-        // Copia la dataTurno per non modificarla
         const turnoDate = new Date(dataTurno);
-
-        // Split oraInizio "HH:mm"
         const [oreStr, minutiStr] = oraInizio.split(":");
         const ore = parseInt(oreStr, 10);
         const minuti = parseInt(minutiStr, 10);
 
-        // Imposta ore e minuti
         turnoDate.setHours(ore, minuti, 0, 0);
-
-        // Confronto con ora attuale
         return turnoDate < new Date();
+    };
+
+    const rangeCorrente: DateRange = {
+        from: filtriRicerca?.dataInizio,
+        to: filtriRicerca?.dataFine,
     };
 
     return (
@@ -206,7 +193,7 @@ const turni = () => {
             </div>
 
             <div className="flex items-center bg-[#ecf3f1] mb-1">
-                <div className="flex items-center bg-[#ecf3f1] p-4 mb-1">
+                <div className="flex items-center bg-[#ecf3f1] p-4 mb-1 gap-2">
                     <div>
                         <Input
                             type="text"
@@ -216,51 +203,16 @@ const turni = () => {
                             className="border border-gray-300 rounded-l-md px-2 py-1 w-48 bg-white rounded-r-none"
                         />
                     </div>
-                    <div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full rounded-none">
-                                    {filtriRicerca?.dataInizio
-                                        ? filtriRicerca?.dataInizio.toLocaleDateString()
-                                        : "Seleziona data"}
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                    mode="single"
-                                    selected={filtriRicerca?.dataInizio}
-                                    onSelect={setDataInizio}
-                                    locale={it}
-                                    className="pointer-events-auto"
-                                />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
-                    <div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full rounded-none">
-                                    {filtriRicerca?.dataFine
-                                        ? filtriRicerca?.dataFine.toLocaleDateString()
-                                        : "Seleziona data"}
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                    mode="single"
-                                    selected={filtriRicerca?.dataFine}
-                                    onSelect={setDataFine}
-                                    locale={it}
-                                    className="pointer-events-auto"
-                                />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
+
+                    <DetelderDateRangePicker
+                        value={rangeCorrente}
+                        onApply={applicaRange}
+                        label=""
+                    />
+
                     <div>
                         <Button
-                            className="bg-[#5e8a7a] hover:bg-[#5e8a7a] cursor-pointer rounded-r-full rounded-l-none -ml-px"
+                            className="bg-[#5e8a7a] hover:bg-[#5e8a7a] cursor-pointer rounded-full"
                             onClick={() => {
                                 if (filtriRicerca) {
                                     caricaTurni(filtriRicerca)
@@ -343,7 +295,6 @@ const turni = () => {
                             return (
                                 <React.Fragment key={index}>
 
-                                    {/* separatore cambio data */}
                                     {isNewDate && (
                                         <TableRow >
 
@@ -369,7 +320,6 @@ const turni = () => {
                                         </TableRow>
                                     )}
 
-                                    {/* separatore cambio evento stessa data */}
                                     {!isNewDate && isNewEvento && (
                                         <TableRow >
                                             <TableCell colSpan={6} className="bg-[#8f8f8f] text-white">
