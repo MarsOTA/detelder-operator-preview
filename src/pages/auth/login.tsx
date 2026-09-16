@@ -19,7 +19,7 @@ export default function Login() {
     console.log("Init login");
 //    console.log("isAuthenticated: " + isAuthenticated);
   //  console.log("isLoading: " + isLoading);
-//    if (!isLoading && isAuthenticated) 
+//    if (!isLoading && isAuthenticated)
 
 /*
       const ruolo = localStorage.getItem('ruolo');
@@ -38,45 +38,71 @@ export default function Login() {
   const submitLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const values = { "username": username, "password": password }
-    console.log(JSON.stringify(values));
+    if (!ezystaffBEUrl) {
+      console.error("VITE_REACT_API_URL non configurata");
+      alert("Errore configurazione: backend non impostato. Verifica VITE_REACT_API_URL su Vercel e fai un nuovo deploy.");
+      return;
+    }
 
-    const resp = await fetch(ezystaffBEUrl + 'auth/login', {
-      method: 'POST',
-      credentials: 'include',
-      body: JSON.stringify(values),
-      headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json'
+    const values = { "username": username, "password": password };
+    const loginUrl = ezystaffBEUrl + 'auth/login';
+    console.log("Login endpoint:", loginUrl);
+
+    try {
+      const resp = await fetch(loginUrl, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json'
+        }
+      });
+
+      const responseText = await resp.text();
+      let data: any;
+
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        console.error("Risposta backend non JSON:", responseText);
+        alert(`Errore backend (${resp.status}): risposta non valida.`);
+        return;
       }
-    });
 
-    const data = await resp.json();
+      console.log("Login response:", resp.status, data);
 
-    console.log(data);
+      if (!resp.ok) {
+        alert(data?.message || `Errore login (${resp.status})`);
+        return;
+      }
 
-    if (data.success) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('ruolo', data.dipendente.ruolo);
-      localStorage.setItem('idOperatore', data.dipendente.id);
-      localStorage.setItem(
-        'operatoreLoggato',
-        `${data.dipendente.nome} ${data.dipendente.cognome}`
-      );
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('ruolo', data.dipendente.ruolo);
+        localStorage.setItem('idOperatore', data.dipendente.id);
+        localStorage.setItem(
+          'operatoreLoggato',
+          `${data.dipendente.nome} ${data.dipendente.cognome}`
+        );
 
-      const ruolo = localStorage.getItem('ruolo');
-      console.log("ruolo: " + ruolo);
-      if (ruolo === 'ADMIN') {
-        navigate('/admin/turni');
-      } else if (ruolo === 'OPERATORE') {
-        navigate('/operator');
-      }      
+        const ruolo = localStorage.getItem('ruolo');
+        console.log("ruolo: " + ruolo);
+        if (ruolo === 'ADMIN') {
+          navigate('/admin/turni');
+        } else if (ruolo === 'OPERATORE') {
+          navigate('/operator');
+        }
 
-      // Aspetta che checkAuth aggiorni il context
-    //  await checkAuth();
+        // Aspetta che checkAuth aggiorni il context
+      //  await checkAuth();
 
-    } else {
-      alert(data.message);
+      } else {
+        alert(data.message || "Login non riuscito");
+      }
+    } catch (error) {
+      console.error("Errore connessione login:", error);
+      alert("Impossibile contattare il backend. Controlla URL backend, HTTPS e CORS.");
     }
 
   };
@@ -131,11 +157,5 @@ export default function Login() {
         </Card>
       </div>
     </>
-
-
-
-
-
-
   )
 }
