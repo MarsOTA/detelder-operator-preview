@@ -90,5 +90,4 @@ VitePWA({
         // 🔹 Niente "icons": il sistema userà un’icona di default
       },
       }),
-prova
 
